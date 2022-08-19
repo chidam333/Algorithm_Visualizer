@@ -3,6 +3,7 @@
     import {flip} from "svelte/animate"
     import "../app.css";
     import {browser} from "$app/env"
+    let end = false
     let done=true
     let delay=1000
     let ValArr = []
@@ -18,6 +19,7 @@
             for(let j=0; j<ValArr.length-i-1;j++){
                 if(ValArr[inde]>ValArr[nexinde]){
                     yield [ValArr[inde],ValArr[nexinde]]=[ValArr[nexinde],ValArr[inde]];
+                    if(end===true){return}
                 }
                 StateArr[inde]=false
                 StateArr[nexinde]=false
@@ -30,9 +32,15 @@
         return;
     }
     const flippinsortin = (ValArr,delay)=>{
-        if(done===false || true){
-            setTimeout(
-            ()=>{
+                if(done!=true){
+                    setInterval(()=>{
+                        const {done}=gen.next();
+                        console.log(done)
+                        if(done){
+                            clearInterval(genid)
+                        }}
+                        ,0)
+                }
                 const gen = bubbleSort(ValArr)
                 const genid =setInterval(()=>{
                     const {done}=gen.next();
@@ -40,10 +48,7 @@
                     if(done){
                         clearInterval(genid)
                     }
-                },1)
-            }    
-            ,1000)
-        }
+                },delay)
 
     }
     const reactive= (num,delay)=>{
@@ -54,6 +59,8 @@
             i+=1
         }
         StateArr = Array(num).fill(false)
+        end = true
+        end = false
         flippinsortin(ValArr,delay)
     }
     let num = 7;
