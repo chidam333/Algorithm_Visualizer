@@ -1,11 +1,10 @@
 <script>
-    import { onMount } from "svelte";
+import { onMount } from "svelte";
+
     import {flip} from "svelte/animate"
     import "../app.css";
-    import {browser} from "$app/env"
-    let end = false
-    let done=true
     let delay=1000
+    let genid;
     let ValArr = []
     let StateArr = []
     let inde=0
@@ -19,7 +18,6 @@
             for(let j=0; j<ValArr.length-i-1;j++){
                 if(ValArr[inde]>ValArr[nexinde]){
                     yield [ValArr[inde],ValArr[nexinde]]=[ValArr[nexinde],ValArr[inde]];
-                    if(end===true){return}
                 }
                 StateArr[inde]=false
                 StateArr[nexinde]=false
@@ -32,19 +30,9 @@
         return;
     }
     const flippinsortin = (ValArr,delay)=>{
-                if(done!=true){
-                    setInterval(()=>{
-                        const {done}=gen.next();
-                        console.log(done)
-                        if(done){
-                            clearInterval(genid)
-                        }}
-                        ,0)
-                }
                 const gen = bubbleSort(ValArr)
-                const genid =setInterval(()=>{
+                genid = setInterval(()=>{
                     const {done}=gen.next();
-                    console.log(done)
                     if(done){
                         clearInterval(genid)
                     }
@@ -52,6 +40,7 @@
 
     }
     const reactive= (num,delay)=>{
+        clearInterval(genid)
         let i = 0;
         ValArr=[]
         while (i<num) {
@@ -59,12 +48,12 @@
             i+=1
         }
         StateArr = Array(num).fill(false)
-        end = true
-        end = false
         flippinsortin(ValArr,delay)
     }
     let num = 7;
-    reactive(num,delay)
+    // onMount(()=>{
+        reactive(num,delay)
+    // })
 
 </script>
 <nav class="nav w-full lg:h-20 bg-orange-700 grid lg:grid-flow-col lg:gap-12 px-12">
@@ -75,13 +64,17 @@
     <div class="AlgoVishu flex lg:flex-col 1 -skew-x-12 mx-auto text-lime-200 font-extrabold tracking-widest"><span class="lg:-ml-8">Sorting &nbsp;</span><span>Algorithm &nbsp;</span><span class="lg:ml-8">Visualiser</span></div>
     <input type="number" placeholder="Quantity of delay (ms)" class= "hmm h-10  my-auto rounded-3xl border-blue-900 border-2 pl-4" bind:value={delay} on:input={reactive(num,delay)}>
 </nav>
-<div class="choose h-12 w-screen grid grid-flow-col mt-8 lg:px-36"><button class="btn mr-2 bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Bubble sort</button>
-<button class="btn mr-2 bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Insertion sort</button>
-<button class="btn mr-2 bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Merge sort</button>
-<button class="btn mr-2 bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Quick Sort</button>
+<nav>
+<div class="choose h-8 w-screen grid grid-flow-col mt-4 lg:px-36 overflow-hidden">
+    <a  href="/" class="mr-2 bg-zinc-900 text-center border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Bubble sort</a >
+    <a href="/insertion" class="btn mr-2 text-center bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Insertion sort</a>
+    <a href="/mergesort" class="btn text-center mr-2 bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Merge sort</a>
+    <a href="quicksort" class="btn text-center mr-2 bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Quick Sort</a>
 </div>
+</nav>
+<br>
 <slot />
-<div class="barplotarea  mx-12 h-96 my-12 border-t-4 border-black bg-gray-200">
+<div class="barplotarea  mx-12 h-96 mb-12 border-t-4 border-black bg-gray-200">
     <ul class="w-full h-full grid grid-flow-col lg:gap-4 sm:gap-0">
         {#each ValArr as i,k (i) }
             <li class:concern={StateArr[k]} class="border-x-4 border-b-4 border-black bg-lime-400" style="height: {i}%;" ></li>
@@ -91,7 +84,7 @@
 </div>
 <style>
     @media (min-width: 768px ) and (max-width:1024px){
-        nav{
+        .nav{
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
@@ -110,7 +103,7 @@
         }
     }
     @media (max-width:768px){
-        nav{
+        .nav{
             padding-bottom: 1.5rem;
             grid-template-rows: repeat(3, 1fr);
             row-gap: 1rem;
