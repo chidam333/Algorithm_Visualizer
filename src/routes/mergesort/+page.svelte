@@ -2,7 +2,7 @@
     import {num,delay} from "../stores"
     let [ValArr,sArr,resu] = [[],[],[],[],[]]
     let i,id,result,step=-1;
-    $: $num=7
+    $: $num=6
     $: yeah=($num>=7) ? false : true
     $: reactive(6),$num
     let okArr
@@ -61,6 +61,10 @@
     }
 </script>
 <main>
+    <div class="small h-72 mb-16 bg-black text-white font-extrabold grid place-items-center lg:hidden">
+        still making it for small devices
+    </div>
+    <div class="full hidden lg:block">
     <div class="h11 mt-1 mb-8 mx-auto w-fit text-orange-600 font-mono font-extrabold">Mergesort visualiser</div>
     <div class="alert bg-red-400 mx-12 h-16 mb-4 p-0 relative" class:yeah={yeah}>
         <div class="close absolute right-4 font-extrabold border-2 border-red-900 mt-2 px-2 cursor-pointer" on:click={()=>{yeah=true}}>X</div>
@@ -85,6 +89,7 @@
             {/each}
         </div>
         {/each}
+    </div>
     </div>
     </div>
 </main>
