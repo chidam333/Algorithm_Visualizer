@@ -52,7 +52,7 @@ import Layout from "../+layout.svelte";
     <div class="barplot h-96 bg-gray-200 mb-16 mx-12 border-t-4 border-black">
         <ul class="h-full grid grid-flow-col lg:gap-4">
             {#each ValArr as value , k (value)}
-                <li class:real={curlist[k]} class:real1={curlist1[k-1]} animate:flip="{{duration:2000}}" class="bg-green-200 border-x-4 border-b-4 border-black" style="height:{value}%"></li>
+                <li class:real={curlist[k]} class:real1={curlist1[k-1]} animate:flip="{{duration:2000}}" class="md:bg-green-200 bg-green-600 md:border-x-4 md:border-b-4 md:border-black" style="height:{value}%"></li>
             {/each}
         </ul>
     </div>
