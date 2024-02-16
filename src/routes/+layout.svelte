@@ -23,7 +23,7 @@
     </div>
 </nav>
 <nav>
-<div class="choose h-8 w-screen grid grid-flow-col mt-4 lg:px-36 overflow-hidden">
+<div class="choose h-8 w-[100%] grid grid-flow-col mt-4 lg:px-36 overflow-hidden">
     <a  href="/" class="mr-2 bg-zinc-900 text-center border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Bubble sort</a >
     <a href="/insertion" class="btn mr-2 text-center bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Insertion sort</a>
     <a href="/mergesort" class="btn text-center mr-2 bg-zinc-900 h-full border-x-4 border-cyan-100 -skew-x-12 text-cyan-50">Merge sort</a>
@@ -32,7 +32,7 @@
 <br>
 <div class="slot"><slot /></div>
 <footer>
-    <div class="foot w-screen h-20 bg-black">
+    <div class="foot w-[100%] h-20 bg-black">
         <div class="name mx-auto w-fit pt-6 text-yellow-200 hover:text-blue-300 font-extrabold"><a href="https://twitter.com/Chidam333" target="_blank">@chidam333</a></div>
     </div>
 </footer>
